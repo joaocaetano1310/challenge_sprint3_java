@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: Challenge_Sprint3_Java
+    runtime: docker
+    branch: main
+    region: oregon
+    plan: free
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: oracle
+      - key: DB_URL
+        value: jdbc:oracle:thin:@oracle.fiap.com.br:1521:ORCL
+      - key: DB_USER
+        value: RM564002
+      - key: DB_PASSWORD
+        sync: false
+      - key: DB_MIGRATIONS_ENABLED
+        value: "true"
+      - key: DB_EXISTENTE
+        value: "false"
+      - key: HTTPS_ENABLED
+        value: "true"
