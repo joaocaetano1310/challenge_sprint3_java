@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Animais')}">
+</head>
+<body>
+<aside th:replace="~{layout :: nav}">
+</aside>
+<main class="main">
+<div th:replace="~{layout :: alerts}">
+</div>
+<header class="page-header">
+<div>
+<div class="eyebrow">CADA PET, UMA HISTÓRIA</div>
+<h1>Animais</h1>
+<p>Informações importantes para um cuidado mais próximo.</p>
+</div>
+<a class="button" th:href="@{/animais/novo}">+ Cadastrar animal</a>
+</header>
+<section class="panel">
+<p class="empty" th:if="${#lists.isEmpty(animais)}">Nenhum animal cadastrado. Comece pelo botão acima.</p>
+<div class="pet-grid">
+<article class="pet-card" th:each="a:${animais}">
+<div class="pet-avatar">♡</div>
+<h2 th:text="${a.nome}">
+</h2>
+<p th:text="${a.especie}+' · '+${a.raca ?: 'Raça não informada'}">
+</p>
+<dl>
+<dt>Idade</dt>
+<dd th:text="${a.idade ?: 'Não informada'}">
+</dd>
+<dt>Porte</dt>
+<dd th:text="${a.porte ?: 'Não informado'}">
+</dd>
+<dt>Peso</dt>
+<dd th:text="${a.peso != null ? a.peso+' kg' : 'Não informado'}">
+</dd>
+<dt th:if="${usuario.admin()}">Tutor</dt>
+<dd th:if="${usuario.admin()}" th:text="${a.tutor}">
+</dd>
+</dl>
+<div class="actions">
+<a class="button secondary" th:href="@{/animais/{id}/editar(id=${a.id})}">Editar</a>
+<details>
+<summary>Excluir</summary>
+<p>Excluir este cadastro? Animais com histórico serão preservados.</p>
+<form th:action="@{/animais/{id}/excluir(id=${a.id})}" method="post">
+<button class="button danger-button">Confirmar exclusão</button>
+</form>
+</details>
+</div>
+</article>
+</div>
+</section>
+<footer>FutureVet · Cuidado que acompanha a vida.</footer>
+</main>
+</body>
+</html>

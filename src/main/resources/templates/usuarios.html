@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Tutores e equipe')}">
+</head>
+<body>
+<aside th:replace="~{layout :: nav}">
+</aside>
+<main class="main">
+<div th:replace="~{layout :: alerts}">
+</div>
+<header class="page-header">
+<div>
+<div class="eyebrow">ÁREA DA CLÍNICA</div>
+<h1>Tutores e equipe</h1>
+<p>Pessoas que fazem parte desta jornada de cuidado.</p>
+</div>
+</header>
+<section class="panel table-wrap">
+<table>
+<thead>
+<tr>
+<th>Nome</th>
+<th>E-mail</th>
+<th>Telefone</th>
+<th>Perfil</th>
+</tr>
+</thead>
+<tbody>
+<tr th:each="u:${usuarios}">
+<td th:text="${u.nome}">
+</td>
+<td th:text="${u.email}">
+</td>
+<td th:text="${u.telefone ?: 'Não informado'}">
+</td>
+<td>
+<span class="badge" th:text="${u.role}">
+</span>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<footer>FutureVet · Cuidado que acompanha a vida.</footer>
+</main>
+</body>
+</html>

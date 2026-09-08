@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Consultas')}">
+</head>
+<body>
+<aside th:replace="~{layout :: nav}">
+</aside>
+<main class="main">
+<div th:replace="~{layout :: alerts}">
+</div>
+<header class="page-header">
+<div>
+<div class="eyebrow">CADA ENCONTRO IMPORTA</div>
+<h1>Consultas</h1>
+<p>Do agendamento ao atendimento, acompanhe cada etapa.</p>
+</div>
+<a class="button" th:href="@{/consultas/nova}">+ Agendar consulta</a>
+</header>
+<section class="panel">
+<p class="empty" th:if="${#lists.isEmpty(consultas)}">Nenhuma consulta por aqui ainda.</p>
+<article class="consult-card" th:each="c:${consultas}">
+<div class="section-heading">
+<div>
+<span class="eyebrow" th:text="${c.animal}">
+</span>
+<h2 th:text="${c.tipo}">
+</h2>
+</div>
+<span class="badge" th:classappend="${c.status}" th:text="${c.statusDescricao}">
+</span>
+</div>
+<p th:text="${#temporals.format(c.data,'dd/MM/yyyy')}+' · '+${c.hora ?: 'Horário não informado'}+' · '+${c.local ?: 'Local não informado'}">
+</p>
+<p th:if="${usuario.admin()}" th:text="'Tutor: '+${c.tutor}">
+</p>
+<p class="note" th:if="${c.observacao != null}" th:text="${c.observacao}">
+</p>
+<p class="note" th:if="${c.status == 'INDEFINIDA'}">Registro anterior à nova aplicação. Situação não informada; reagende para iniciar o novo fluxo.</p>
+<div class="actions">
+<a th:if="${c.ativa()}" class="button secondary" th:href="@{/consultas/{id}/reagendar(id=${c.id})}">Reagendar</a>
+<form th:if="${usuario.admin() and c.status == 'AGENDADA'}" th:action="@{/consultas/{id}/confirmar(id=${c.id})}" method="post">
+<button class="button">Confirmar</button>
+</form>
+<details th:if="${usuario.admin() and c.status == 'CONFIRMADA'}">
+<summary>Concluir atendimento</summary>
+<form th:action="@{/consultas/{id}/concluir(id=${c.id})}" method="post">
+<label>Resumo do atendimento<textarea name="observacao" required maxlength="255">
+</textarea>
+</label>
+<button class="button">Concluir</button>
+</form>
+</details>
+<details th:if="${c.ativa()}">
+<summary>Cancelar consulta</summary>
+<form th:action="@{/consultas/{id}/cancelar(id=${c.id})}" method="post">
+<label>Motivo<textarea name="motivo" required maxlength="255">
+</textarea>
+</label>
+<button class="button danger-button">Confirmar cancelamento</button>
+</form>
+</details>
+</div>
+</article>
+</section>
+<footer>FutureVet · Cuidado que acompanha a vida.</footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout :: head('Não foi possível continuar')}">
+</head>
+<body>
+<aside th:replace="~{layout :: nav}">
+</aside>
+<main class="main">
+<div th:replace="~{layout :: alerts}">
+</div>
+<section class="panel error-panel">
+<div class="eyebrow">VAMOS RESOLVER</div>
+<h1>Não foi possível continuar.</h1>
+<p th:text="${mensagem ?: 'Ocorreu um problema inesperado. Tente novamente ou procure a equipe responsável.'}">
+</p>
+<a class="button" th:href="@{/}">Voltar para o início</a>
+</section>
+<footer>FutureVet · Cuidado que acompanha a vida.</footer>
+</main>
+</body>
+</html>
