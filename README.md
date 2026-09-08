@@ -2,7 +2,28 @@
 
 Aplicação web nova em Java 17/Spring Boot, baseada no esquema do arquivo `FutureVetDB.sql` enviado em 08/09/2026. Reúne tutores, animais, agenda e carteira de vacinação. O objetivo é reduzir desencontros na agenda e facilitar o acompanhamento de prevenção dos pets.
 
+## 👥 Equipe
+
+| Nome | RM |
+|---|---|
+| João Victor Caetano Alves da Silva | 562074 |
+| João Victor Bueno Castelini da Silva | 564115 |
+| Ryan Vetoriano | 565667 |
+| Felipe Furlanetto | 562766 |
+| Raul Rezende Iemini Aguiar | 564002 |
+
 ## Comece aqui
+
+Repositório: [Challenge_Sprint3_Java](https://github.com/joaocaetano1310/Challenge_Sprint3_Java).
+
+Para obter o código pelo Git:
+
+```sh
+git clone https://github.com/joaocaetano1310/Challenge_Sprint3_Java.git
+cd Challenge_Sprint3_Java
+```
+
+Execute os comandos Maven na pasta que contém `pom.xml`. Se o projeto estiver dentro de uma subpasta `FutureVet`, entre nela primeiro.
 
 Para conhecer a aplicação **sem conectar ao Oracle**, extraia o ZIP inteiro e execute `iniciar-demo.cmd` no Windows. É necessário Java 17 ou 21 instalado. Mantenha a pasta `executavel/lib` junto do JAR.
 
