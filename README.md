@@ -29,7 +29,7 @@ O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tu
 
 ## 🚀 Deploy
 
-[![Acessar Aplicação](https://img.shields.io/badge/Render-Aplicação%20Online-46E3B7?style=for-the-badge&logo=render)](SEU_LINK_DO_RENDER_AQUI)
+[![Acessar Aplicação](https://img.shields.io/badge/Render-Aplicação%20Online-46E3B7?style=for-the-badge&logo=render)](https://challenge-sprint3-java.onrender.com)
 
 > ⚠️ O plano gratuito do Render pode levar até **60 segundos** para iniciar após um período de inatividade.
 
@@ -170,7 +170,7 @@ java -jar target/*.jar --spring.profiles.active=oracle
 ## 📌 Links Importantes
 
 - 🔗 **Repositório GitHub:** https://github.com/joaocaetano1310/Challenge_Sprint3_Java
-- 🌐 **Aplicação em produção:** SEU_LINK_DO_RENDER_AQUI
+- 🌐 **Aplicação em produção:** https://challenge-sprint3-java.onrender.com
 - 🎬 **Vídeo demonstrativo:** SEU_LINK_DO_YOUTUBE_AQUI
 
 ---
