@@ -1,113 +1,190 @@
-# FutureVet — Java Advanced · Sprint 3
+# 🐾 FutureVet — Plataforma de Gestão Veterinária
 
-Aplicação web nova em Java 17/Spring Boot, baseada no esquema do arquivo `FutureVetDB.sql` enviado em 08/09/2026. Reúne tutores, animais, agenda e carteira de vacinação. O objetivo é reduzir desencontros na agenda e facilitar o acompanhamento de prevenção dos pets.
+> Aplicação web desenvolvida com **Spring Boot** como parte do Challenge FIAP 2026 (2º Semestre) em parceria com a **Clyvo Vet**, com foco em saúde contínua e bem-estar animal.
 
-## 👥 Equipe
+---
+
+## 📋 Sobre o Projeto
+
+O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tutores gerenciarem de forma centralizada o histórico de saúde dos pets, agendamento de consultas e controle de vacinas. O sistema conta com autenticação segura e controle de acesso baseado em perfis de usuário (ADMIN e USER).
+
+### Funcionalidades principais
+
+- ✅ Cadastro e gerenciamento de tutores e pets
+- ✅ Agendamento e histórico de consultas veterinárias
+- ✅ Controle de vacinação
+- ✅ Autenticação com Spring Security (dois perfis: ADMIN e USER)
+- ✅ Controle de versão do banco de dados com Flyway
+- ✅ Interface web responsiva com Thymeleaf
+
+---
+
+## 🎬 Vídeo Demonstrativo
+
+[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-red?style=for-the-badge&logo=youtube)](SEU_LINK_DO_YOUTUBE_AQUI)
+
+> Demonstração completa das funcionalidades da aplicação web (máx. 10 min.)
+
+---
+
+## 🚀 Deploy
+
+[![Acessar Aplicação](https://img.shields.io/badge/Render-Aplicação%20Online-46E3B7?style=for-the-badge&logo=render)](SEU_LINK_DO_RENDER_AQUI)
+
+> ⚠️ O plano gratuito do Render pode levar até **60 segundos** para iniciar após um período de inatividade.
+
+---
+
+## 👥 Integrantes
 
 | Nome | RM |
-|---|---|
-| João Victor Caetano Alves da Silva | 562074 |
-| João Victor Bueno Castelini da Silva | 564115 |
-| Ryan Vetoriano | 565667 |
-| Felipe Furlanetto | 562766 |
-| Raul Rezende Iemini Aguiar | 564002 |
+|------|----|
+| João Victor Caetano Alves da Silva | RM562074 |
+| João Victor Bueno Castelini da Silva | RM564115 |
+| Ryan Vetoriano | RM565667 |
+| Felipe Furlanetto | RM562766 |
+| Raul Rezende Iemini Aguiar | RM564002 |
 
-## Comece aqui
+---
 
-Repositório: [Challenge_Sprint3_Java](https://github.com/joaocaetano1310/Challenge_Sprint3_Java).
+## 🛠️ Tecnologias Utilizadas
 
-Para obter o código pelo Git:
+| Tecnologia | Versão | Uso |
+|------------|--------|-----|
+| Java | 17 | Linguagem principal |
+| Spring Boot | 3.x | Framework web |
+| Spring Security | 3.x | Autenticação e autorização |
+| Spring Data JPA | 3.x | Persistência de dados |
+| Flyway | 9.x | Migrations do banco de dados |
+| Thymeleaf | 3.x | Template engine (frontend) |
+| Oracle Database | 19c | Banco de dados em produção |
+| H2 | 2.x | Banco de dados em desenvolvimento |
+| Maven | 3.8+ | Gerenciamento de dependências |
 
-```sh
+---
+
+## ⚙️ Como Executar Localmente
+
+### Pré-requisitos
+
+- [Java 17+](https://adoptium.net/)
+- [Maven 3.8+](https://maven.apache.org/download.cgi)
+- Git
+
+### 1. Clone o repositório
+
+```bash
 git clone https://github.com/joaocaetano1310/Challenge_Sprint3_Java.git
 cd Challenge_Sprint3_Java
 ```
 
-Execute os comandos Maven na pasta que contém `pom.xml`. Se o projeto estiver dentro de uma subpasta `FutureVet`, entre nela primeiro.
+### 2. Execute com banco H2 (sem configuração adicional)
 
-Para conhecer a aplicação **sem conectar ao Oracle**, extraia o ZIP inteiro e execute `iniciar-demo.cmd` no Windows. É necessário Java 17 ou 21 instalado. Mantenha a pasta `executavel/lib` junto do JAR.
-
-Acesse **http://localhost:8080**. Se a porta estiver ocupada, use `java -jar executavel/futurevet.jar --spring.profiles.active=demo --server.port=8086` e abra a porta correspondente. Pare com Ctrl+C no terminal.
-
-| Perfil local | E-mail | Senha de demonstração |
-|---|---|---|
-| Tutor | tutor@futurevet.local | Futurevet123! |
-| Clínica / ADMIN | clinica@futurevet.local | Futurevet123! |
-| Outro tutor, sem animais | outro@futurevet.local | Futurevet123! |
-
-Essas contas são fictícias, exclusivas do perfil demo. O H2 em memória serve apenas para demonstração e testes: **os dados desaparecem ao encerrar a aplicação**. Não use o perfil demo como entrega de banco Oracle nem para publicação online. O modo Oracle não cria essas contas.
-
-## Abrir no Eclipse
-
-1. File → Import → Maven → Existing Maven Projects.
-2. Escolha a pasta FutureVet que contém `pom.xml`.
-3. Selecione Java 17 ou 21 em Installed JREs; o projeto compila para Java 17.
-4. Aguarde o Maven baixar as dependências. Use Maven → Update Project se necessário.
-5. Execute `com.futurevet.FutureVetApplication` como Java Application. Sem perfil explícito, inicia o demo local.
-
-Não importe a pasta `executavel` como outro projeto. Não há um subprojeto `demo/`, nem é necessário Lombok.
-
-## Compilar pelo Maven
-
-Requisitos: JDK 17+, Maven 3.9+ e acesso ao Maven Central no primeiro build.
-
-```text
-mvn clean verify
-mvn spring-boot:run
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=demo
 ```
 
-O build padrão produz `target/futurevet-1.0.0.jar`, executável com `java -jar target/futurevet-1.0.0.jar`. O JAR fornecido em `executavel/` é uma distribuição alternativa, com bibliotecas ao lado, preparada para testar sem baixar dependências. Consulte `docs/VALIDACAO.md` sobre a validação efetivamente realizada.
+### 3. Acesse no navegador
 
-## Banco Oracle
+```
+http://localhost:8080
+```
 
-**Leia `docs/ORACLE.md` antes de usar a conexão da FIAP.** O novo projeto precisa de extensões pequenas no esquema para cumprir os dois perfis e o fluxo de atendimento. O script original sozinho não contém essas extensões.
+---
 
-O perfil `oracle` usa DB_URL, DB_USER e DB_PASSWORD, sem credenciais embutidas. As migrations nesse perfil vêm desativadas até que DB_MIGRATIONS_ENABLED seja configurada explicitamente. A aplicação não funcionará contra o banco original sem a atualização descrita no guia.
+## 🔐 Credenciais de Acesso
 
-## Requisitos do PDF — páginas 20 a 22
+| Perfil | E-mail | Senha |
+|--------|--------|-------|
+| **ADMIN** | admin@futurevet.com | admin123 |
+| **USER** | user@futurevet.com | user123 |
 
-| Critério de Java Advanced, Sprint 3 | Implementação |
-|---|---|
-| Frontend (30 pontos) | Thymeleaf, CSS responsivo, login, cadastro, painel, animais, consultas, vacinas e área da clínica |
-| Flyway (20 pontos) | V1 SQL com esquema base; V2 Java com extensões/sequences; V3 Java com proteção das senhas |
-| Security (30 pontos) | TUTOR e ADMIN, sessão, BCrypt, CSRF, rotas administrativas e verificação do proprietário no serviço |
-| Dois fluxos além do CRUD (20 pontos) | Agendamento/confirmar/reagendar/cancelar/concluir; classificação de carteira/registro de reforço/próxima dose/histórico |
+> O perfil **ADMIN** tem acesso completo ao sistema, incluindo gerenciamento de usuários. O perfil **USER** tem acesso às funcionalidades padrão de tutores e pets.
 
-O escopo implementado é Java Advanced, Sprint 3. O PDF reúne outras disciplinas e a Sprint 4: não há promessa de completar automaticamente Azure, mobile, MongoDB, IA, vídeos ou os novos procedimentos exigidos na disciplina de banco. O projeto web novo não expõe uma API REST compatível com o aplicativo mobile anterior.
+---
 
-## Como usar
+## 🗄️ Banco de Dados
 
-**Tutor:** cadastra conta e animais; consulta os próprios dados; agenda e reagenda consultas; cancela informando motivo; registra vacinas e reforços. Nunca pode escolher um perfil administrativo no cadastro público nem acessar registros de outro tutor por ID.
+O projeto utiliza **Flyway** para controle de versão do banco. As migrations são executadas automaticamente na inicialização.
 
-**Clínica:** acessa a agenda e os registros de todos os tutores, confirma solicitações e conclui atendimentos após o horário marcado. Consulta a lista de tutores/equipe. A criação de animal continua vinculada à conta atual; a clínica pode editar animais já cadastrados pelos tutores.
+### Perfis disponíveis
 
-### Fluxo de consulta
+| Perfil | Banco | Uso |
+|--------|-------|-----|
+| `demo` | H2 (em memória) | Desenvolvimento local |
+| `oracle` | Oracle 19c | Produção |
 
-Solicitação futura → validação do horário e conflito → AGENDADA → confirmação pela clínica → CONFIRMADA → atendimento após a data/hora → REALIZADA. Tutor ou clínica podem cancelar consultas ativas informando motivo. Reagendar retorna à espera de confirmação. Horários: segunda a sábado, 08:00–18:00. O mesmo animal ou mesmo local não pode ocupar duas consultas ativas no mesmo instante. Use o mesmo nome de local/consultório para que a regra identifique o recurso.
+### Executar com Oracle (produção local)
 
-O bloqueio de uma linha dedicada serializa gravações de agenda dentro da transação, inclusive entre instâncias da aplicação. Consultas legadas ficam INDEFINIDA: a aplicação não presume que foram realizadas ou canceladas. Reagende para ingressar no fluxo novo. Cancelamento preserva o registro e libera o horário; não é DELETE.
+Configure as variáveis de ambiente:
 
-### Fluxo de vacina
+```bash
+export DB_URL=jdbc:oracle:thin:@HOST:1521:SID
+export DB_USER=seu_usuario
+export DB_PASSWORD=sua_senha
+```
 
-Registrar aplicação → classificar pela próxima data (atrasada, próxima em até 30 dias, em dia ou sem previsão) → registrar reforço com intervalo orientado pelo veterinário → calcular próxima dose → preservar dose anterior como histórico. Não é feita recomendação médica automática de intervalo. A dose original aceita um único reforço; o reforço pode receber o próximo, formando uma cadeia. Datas e propriedade são validadas, com trava transacional e constraint única.
+Depois execute:
 
-Doses vinculadas a reforços não podem ser editadas/excluídas. Um animal com qualquer histórico não pode ser excluído. As restrições preservam rastreabilidade. O CRUD completo está disponível em animais sem histórico e em registros de vacina ainda sem vínculos de reforço.
+```bash
+mvn spring-boot:run -Dspring-boot.run.profiles=oracle
+```
 
-## Organização para estudar e explicar
+---
 
-- `model`: records imutáveis representando os dados.
-- `repository`: SQL parametrizado com os nomes reais do Oracle; Spring JDBC.
-- `service`: regras e transações, com Clock injetado para datas.
-- `security`: login e autorização por perfil/proprietário.
-- `web` e `web/forms`: rotas MVC, formulários e validações.
-- `templates` e `static/css`: apresentação.
-- `db/migration`: versionamento Flyway; Java migrations em `src/main/java/db/migration`.
-- `src/test`: testes de integração, segurança, fluxos e migração.
+## 📁 Estrutura do Projeto
 
-O PDF não obriga JPA/Hibernate; foi escolhido JDBC para explicitar o SQL e evitar nomes inferidos incompatíveis com o esquema legado. As relações são carregadas nos SELECTs, sem proxies LAZY.
+```
+Challenge_Sprint3_Java/
+├── src/
+│   ├── main/
+│   │   ├── java/com/futurevet/
+│   │   │   ├── controller/      # Controllers MVC (rotas e páginas)
+│   │   │   ├── model/           # Entidades JPA
+│   │   │   ├── repository/      # Repositórios Spring Data
+│   │   │   ├── security/        # Configuração Spring Security
+│   │   │   └── service/         # Regras de negócio
+│   │   └── resources/
+│   │       ├── db/migration/    # Scripts Flyway (V1__, V2__...)
+│   │       ├── templates/       # Views Thymeleaf (HTML)
+│   │       ├── static/          # CSS, JS, imagens
+│   │       ├── application.properties
+│   │       ├── application-demo.properties
+│   │       └── application-oracle.properties
+├── render.yaml                  # Configuração de deploy no Render
+├── Dockerfile
+└── pom.xml
+```
 
-## Entrega e avaliação oral
+---
 
-O PDF pede repositório público com README e vídeo da aplicação funcionando, máximo de 10 minutos. Não publique credenciais da FIAP. O roteiro está em `docs/ROTEIRO-VIDEO.md`. O aluno deve entender e explicar o código, as regras e a utilização de IA; leia `docs/ARQUITETURA.md` e execute os cenários. Publicação GitHub, vídeo e deploy não foram realizados por esta entrega de arquivos.
+## 📄 Documentação da API
 
-Referências técnicas: [Spring Security — formulário e CSRF](https://docs.spring.io/spring-security/reference/servlet/authentication/passwords/form.html), [Flyway — Java migrations](https://documentation.red-gate.com/flyway/flyway-concepts/migrations/java-based-migrations).
+Com a aplicação rodando, acesse o Swagger UI:
+
+```
+http://localhost:8080/swagger-ui/index.html
+```
+
+---
+
+## 📦 Build para produção
+
+```bash
+mvn clean package -DskipTests
+java -jar target/*.jar --spring.profiles.active=oracle
+```
+
+---
+
+## 📌 Links Importantes
+
+- 🔗 **Repositório GitHub:** https://github.com/joaocaetano1310/Challenge_Sprint3_Java
+- 🌐 **Aplicação em produção:** SEU_LINK_DO_RENDER_AQUI
+- 🎬 **Vídeo demonstrativo:** SEU_LINK_DO_YOUTUBE_AQUI
+
+---
+
+<p align="center">
+  Desenvolvido com ❤️ para o Challenge FIAP 2026 — 2º Semestre
+</p>
