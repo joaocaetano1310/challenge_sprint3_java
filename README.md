@@ -158,16 +158,6 @@ Challenge_Sprint3_Java/
 
 ---
 
-## 📄 Documentação da API
-
-Com a aplicação rodando, acesse o Swagger UI:
-
-```
-http://localhost:8080/swagger-ui/index.html
-```
-
----
-
 ## 📦 Build para produção
 
 ```bash
