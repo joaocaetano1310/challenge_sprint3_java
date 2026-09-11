@@ -21,7 +21,7 @@ O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tu
 
 ## 🎬 Vídeo Demonstrativo
 
-[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-red?style=for-the-badge&logo=youtube)](SEU_LINK_DO_YOUTUBE_AQUI)
+[![Assistir no YouTube](https://img.shields.io/badge/YouTube-Assistir%20Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/jWtMZDGaDf8)
 
 > Demonstração completa das funcionalidades da aplicação web (máx. 10 min.)
 
