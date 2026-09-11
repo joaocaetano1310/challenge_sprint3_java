@@ -6,14 +6,15 @@
 
 ## 📋 Sobre o Projeto
 
-O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tutores gerenciarem de forma centralizada o histórico de saúde dos pets, agendamento de consultas e controle de vacinas. O sistema conta com autenticação segura e controle de acesso baseado em perfis de usuário (ADMIN e USER).
+O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tutores gerenciarem de forma centralizada o histórico de saúde dos pets, agendamento de consultas e controle de vacinas. O sistema conta com autenticação segura e controle de acesso baseado em perfis de usuário (ADMIN e TUTOR).
 
 ### Funcionalidades principais
 
 - ✅ Cadastro e gerenciamento de tutores e pets
-- ✅ Agendamento e histórico de consultas veterinárias
-- ✅ Controle de vacinação
-- ✅ Autenticação com Spring Security (dois perfis: ADMIN e USER)
+- ✅ Agendamento de consultas, com confirmação, cancelamento e conclusão pela clínica
+- ✅ Carteira de vacinação com controle de doses, reforços e histórico
+- ✅ Autenticação com Spring Security (dois perfis: ADMIN e TUTOR)
+- ✅ API REST com autenticação JWT, documentada com Swagger
 - ✅ Controle de versão do banco de dados com Flyway
 - ✅ Interface web responsiva com Thymeleaf
 
@@ -52,9 +53,11 @@ O **FutureVet** é uma plataforma web que permite a clínicas veterinárias e tu
 | Tecnologia | Versão | Uso |
 |------------|--------|-----|
 | Java | 17 | Linguagem principal |
-| Spring Boot | 3.x | Framework web |
-| Spring Security | 3.x | Autenticação e autorização |
-| Spring Data JPA | 3.x | Persistência de dados |
+| Spring Boot | 3.2.5 | Framework web |
+| Spring Security | 6.x | Autenticação e autorização |
+| Spring JDBC (JdbcTemplate) | 6.x | Persistência de dados |
+| JJWT | 0.12.6 | Geração e validação do token JWT da API |
+| Springdoc OpenAPI | 2.5.0 | Documentação da API (Swagger UI) |
 | Flyway | 9.x | Migrations do banco de dados |
 | Thymeleaf | 3.x | Template engine (frontend) |
 | Oracle Database | 19c | Banco de dados em produção |
@@ -90,22 +93,75 @@ mvn spring-boot:run -Dspring-boot.run.profiles=demo
 http://localhost:8080
 ```
 
+### 4. Executar os testes
+
+```bash
+mvn test
+```
+
 ---
 
 ## 🔐 Credenciais de Acesso
 
+Contas criadas automaticamente ao rodar no perfil `demo`:
+
 | Perfil | E-mail | Senha |
 |--------|--------|-------|
-| **ADMIN** | admin@futurevet.com | admin123 |
-| **USER** | user@futurevet.com | user123 |
+| **ADMIN** (clínica) | clinica@futurevet.local | Futurevet123! |
+| **TUTOR** | tutor@futurevet.local | Futurevet123! |
+| **TUTOR** (segundo tutor) | outro@futurevet.local | Futurevet123! |
 
-> O perfil **ADMIN** tem acesso completo ao sistema, incluindo gerenciamento de usuários. O perfil **USER** tem acesso às funcionalidades padrão de tutores e pets.
+> O perfil **ADMIN** representa a clínica e tem acesso completo ao sistema, incluindo o gerenciamento de usuários e a confirmação, o cancelamento e a conclusão das consultas. O perfil **TUTOR** acessa apenas os próprios pets, vacinas e consultas.
+>
+> No perfil `oracle` (produção) esses dados de demonstração não são carregados: crie sua conta em `/registro`.
+
+---
+
+## 🔌 API REST
+
+A aplicação também expõe uma API REST em `/api`, protegida por token JWT, utilizada pelo aplicativo mobile do projeto.
+
+- **Documentação (Swagger UI):** http://localhost:8080/swagger-ui/index.html
+- **Especificação OpenAPI:** http://localhost:8080/v3/api-docs
+
+### Autenticação
+
+```bash
+curl -X POST http://localhost:8080/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"tutor@futurevet.local","senha":"Futurevet123!"}'
+```
+
+A resposta traz o token, que deve ser enviado nas demais requisições:
+
+```bash
+curl http://localhost:8080/api/animais \
+  -H "Authorization: Bearer SEU_TOKEN"
+```
+
+### Principais endpoints
+
+| Método | Rota | Descrição |
+|--------|------|-----------|
+| POST | `/api/auth/login` | Autentica e devolve o token JWT |
+| POST | `/api/auth/registro` | Cadastra um novo tutor |
+| GET / POST / PUT / DELETE | `/api/animais` | CRUD de animais |
+| GET / POST / PUT / DELETE | `/api/vacinas` | Carteira de vacinação |
+| POST | `/api/vacinas/{id}/reforco` | Registra o reforço de uma dose |
+| GET / POST / PUT | `/api/consultas` | Agenda de consultas |
+| POST | `/api/consultas/{id}/confirmar` · `/cancelar` · `/concluir` | Ações da clínica |
 
 ---
 
 ## 🗄️ Banco de Dados
 
 O projeto utiliza **Flyway** para controle de versão do banco. As migrations são executadas automaticamente na inicialização.
+
+| Versão | Tipo | Descrição |
+|--------|------|-----------|
+| `V1__estrutura_original.sql` | SQL | Estrutura original das tabelas |
+| `V2__suporte_aplicacao.java` | Java | Perfis de usuário, status das consultas, vínculo de reforços, sequences e índices |
+| `V3__proteger_senhas.java` | Java | Conversão das senhas existentes para hash BCrypt |
 
 ### Perfis disponíveis
 
@@ -138,20 +194,29 @@ mvn spring-boot:run -Dspring-boot.run.profiles=oracle
 Challenge_Sprint3_Java/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/futurevet/
-│   │   │   ├── controller/      # Controllers MVC (rotas e páginas)
-│   │   │   ├── model/           # Entidades JPA
-│   │   │   ├── repository/      # Repositórios Spring Data
-│   │   │   ├── security/        # Configuração Spring Security
-│   │   │   └── service/         # Regras de negócio
+│   │   ├── java/
+│   │   │   ├── com/futurevet/
+│   │   │   │   ├── FutureVetApplication.java  # Classe principal
+│   │   │   │   ├── config/       # Carga de dados demo e primeiro admin
+│   │   │   │   ├── model/        # Entidades (records)
+│   │   │   │   ├── repository/   # Acesso ao banco com JdbcTemplate
+│   │   │   │   ├── security/     # Spring Security, JWT e controle de acesso
+│   │   │   │   ├── service/      # Regras de negócio
+│   │   │   │   └── web/          # Controllers MVC (Thymeleaf)
+│   │   │   │       ├── api/      # Controllers REST
+│   │   │   │       │   └── dto/  # Objetos de entrada e saída da API
+│   │   │   │       └── forms/    # Formulários com Bean Validation
+│   │   │   └── db/migration/     # Migrations Java do Flyway (V2, V3)
 │   │   └── resources/
-│   │       ├── db/migration/    # Scripts Flyway (V1__, V2__...)
-│   │       ├── templates/       # Views Thymeleaf (HTML)
-│   │       ├── static/          # CSS, JS, imagens
+│   │       ├── db/migration/     # Migration SQL do Flyway (V1)
+│   │       ├── templates/        # Views Thymeleaf (HTML)
+│   │       ├── static/           # CSS
 │   │       ├── application.properties
 │   │       ├── application-demo.properties
 │   │       └── application-oracle.properties
-├── render.yaml                  # Configuração de deploy no Render
+│   └── test/java/com/futurevet/  # Testes automatizados
+├── database/                     # Script DDL do banco
+├── render.yaml                   # Configuração de deploy no Render
 ├── Dockerfile
 └── pom.xml
 ```
