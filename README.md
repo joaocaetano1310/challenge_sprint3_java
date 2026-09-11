@@ -171,7 +171,7 @@ java -jar target/*.jar --spring.profiles.active=oracle
 
 - 🔗 **Repositório GitHub:** https://github.com/joaocaetano1310/Challenge_Sprint3_Java
 - 🌐 **Aplicação em produção:** https://challenge-sprint3-java.onrender.com
-- 🎬 **Vídeo demonstrativo:** SEU_LINK_DO_YOUTUBE_AQUI
+- 🎬 **Vídeo demonstrativo:** https://youtu.be/jWtMZDGaDf8
 
 ---
 
